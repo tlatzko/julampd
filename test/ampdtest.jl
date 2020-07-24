@@ -11,11 +11,16 @@ function test_polyfit()
         x[i] = i * .1
     end
     p = [3, 2 , .2]
-    y = p[1] .* x.^2 + p[2] .* x  .+ p[3] 
+    y = julampd.polyval(p, x)
+    phat = julampd.polyfit(x, y, 2)
+    return p, phat
 
 end
+ 
 
 
 @testset "Julia AMPD Test" begin 
+    p, phat = test_polyfit()
     @test julampd.detrend(10) == 20
+    @test p ≈ phat
 end;
